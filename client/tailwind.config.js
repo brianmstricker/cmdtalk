@@ -2,7 +2,12 @@
 export default {
  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
  theme: {
-  extend: {},
+  extend: {
+   backgroundImage: {
+    "custom-gradient":
+     "linear-gradient(0deg, rgba(0,0,255,0) 90%, rgba(17, 24, 39, 0.75) 100%), linear-gradient(180deg, rgba(0,0,255,0) 90%, rgba(17, 24, 39, 0.75) 100%)",
+   },
+  },
  },
  plugins: [],
 };
