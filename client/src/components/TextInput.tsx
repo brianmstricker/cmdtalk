@@ -9,9 +9,9 @@ const TextInput = ({ setContainerMargin }: { setContainerMargin: React.Dispatch<
      className="flex-grow py-2 px-4 w-full h-full bg-transparent text-white/80 placeholder-white/60 resize-none custom-scrollbar"
      placeholder="Type a message"
      minRows={2}
-     maxRows={4}
+     maxRows={6}
      onHeightChange={(height) => {
-      setContainerMargin(height / 16);
+      setContainerMargin(height / 18);
      }}
     />
    </div>
