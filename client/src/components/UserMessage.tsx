@@ -1,8 +1,8 @@
-const UserMessage = () => {
+const UserMessage = ({ username, message }: { username: string; message: string }) => {
  return (
-  <div className="flex gap-1">
-   <div className="font-semibold">username: </div>
-   <div>msg</div>
+  <div className="flex gap-2">
+   <div className="font-bold">{username}: </div>
+   <div>{message}</div>
   </div>
  );
 };
