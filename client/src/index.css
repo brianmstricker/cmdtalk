@@ -3,5 +3,18 @@
 @tailwind utilities;
 
 body {
-  @apply bg-gray-900 text-emerald-500;
+  font-family: 'JetBrains Mono Variable', monospace;
+  @apply bg-gray-900 text-green-500 flex min-h-screen w-full;
+}
+
+body>* {
+  @apply grow;
+}
+
+#root {
+  @apply grow flex items-center justify-center;
+}
+
+#root>* {
+  @apply grow;
 }
