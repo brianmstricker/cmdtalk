@@ -1,4 +1,10 @@
 # todo
 
+## frontend
+
 -maybe allow font/font color change
 -light theme
+
+## backend
+
+-<https://github.com/gorilla/websocket>
