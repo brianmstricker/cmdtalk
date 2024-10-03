@@ -40,3 +40,4 @@ server/*.njsproj
 server/*.sln
 server/*.sw?
 server/.env
+server/tmp
