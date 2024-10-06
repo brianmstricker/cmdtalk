@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
-func connectDB() (*mongo.Client, error) {
+func ConnectDB() (*mongo.Client, error) {
 	MONGODB_URI := os.Getenv("MONGODB_URI")
 	client, err := mongo.Connect(options.Client().SetCompressors([]string{"zstd"}).ApplyURI(MONGODB_URI))
 	if err != nil {
@@ -24,11 +24,4 @@ func connectDB() (*mongo.Client, error) {
 		panic(err)
 	}
 	return client, nil
-	// client, _ := mongo.Connect(options.Client().ApplyURI(MONGODB_URI))
-	// err := client.Ping(context.Background(), nil)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// 	return nil, err
-	// }
-	// return client, nil
 }
