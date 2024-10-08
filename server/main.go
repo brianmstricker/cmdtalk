@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/brianmstricker/cmdtalk/controller"
 	"github.com/brianmstricker/cmdtalk/db"
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
@@ -60,6 +61,7 @@ func (a *App) setupHttp() {
 		}
 		return fiber.ErrUpgradeRequired
 	})
+	app.Get("/api/messages", controller.GetMessages)
 	a.httpServer = app
 }
 

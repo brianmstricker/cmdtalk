@@ -5,10 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 
 function App() {
  const [containerMargin, setContainerMargin] = useState(3.5);
- const query = useQuery({ queryKey: ["messages"], queryFn: getMessages });
  const scrollContainer = useRef<HTMLDivElement>(null);
+ const { data, isFetching } = useQuery({ queryKey: ["messages"], queryFn: getMessages });
+ console.log(data);
  async function getMessages() {
-  const response = await fetch("http://127.0.0.1:8000/api");
+  const response = await fetch("http://127.0.0.1:8000/api/messages");
   if (!response.ok) {
    throw new Error("Network response was not ok");
   }
@@ -26,13 +27,13 @@ function App() {
     className="flex flex-col gap-y-3 overflow-y-auto my-2 p-4 custom-scrollbar"
     style={{ marginBottom: `${containerMargin}rem` }}
    >
-    {Array.from({ length: 10 }).map((_, i) => (
+    {/* {Array.from({ length: 10 }).map((_, i) => (
      <UserMessage
       key={i}
       username="test"
       message="really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. really long message. "
      />
-    ))}
+    ))} */}
    </div>
    <div className="w-full bg-transparent h-4 shrink-0" />
    <TextInput setContainerMargin={setContainerMargin} />
