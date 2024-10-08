@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import TextInput from "./components/TextInput";
 import UserMessage from "./components/UserMessage";
 import { useQuery } from "@tanstack/react-query";
+import { useBoundStore } from "./store/store";
+import SetUsername from "./components/SetUsername";
+import NoMessages from "./components/NoMessages";
 
 function App() {
  const [containerMargin, setContainerMargin] = useState(3.5);
  const scrollContainer = useRef<HTMLDivElement>(null);
- const { data, isFetching } = useQuery({ queryKey: ["messages"], queryFn: getMessages });
- console.log(data);
+ const user = useBoundStore((state) => state.user);
+ const { data, isFetching } = useQuery({ queryKey: ["messages"], queryFn: getMessages, refetchOnWindowFocus: false });
  async function getMessages() {
   const response = await fetch("http://127.0.0.1:8000/api/messages");
   if (!response.ok) {
@@ -27,6 +30,19 @@ function App() {
     className="flex flex-col gap-y-3 overflow-y-auto my-2 p-4 custom-scrollbar"
     style={{ marginBottom: `${containerMargin}rem` }}
    >
+    {isFetching ? (
+     Array.from({ length: 3 }).map((_, i) => <div key={i} className="animate-pulse bg-gray-800 h-8 w-full" />)
+    ) : (
+     <>
+      {!data || !data.length || data.length === 0 ? (
+       <NoMessages />
+      ) : (
+       data.map((message: { username: string; body: string }, i: number) => (
+        <UserMessage key={i} username={message.username} message={message.body} />
+       ))
+      )}
+     </>
+    )}
     {/* {Array.from({ length: 10 }).map((_, i) => (
      <UserMessage
       key={i}
@@ -36,7 +52,7 @@ function App() {
     ))} */}
    </div>
    <div className="w-full bg-transparent h-4 shrink-0" />
-   <TextInput setContainerMargin={setContainerMargin} />
+   {user ? <TextInput setContainerMargin={setContainerMargin} /> : <SetUsername />}
   </div>
  );
 }

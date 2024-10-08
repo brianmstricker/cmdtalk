@@ -5,9 +5,12 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 type User struct {
 	Id       primitive.ObjectID `json:"id" bson:"_id"`
 	Username string             `json:"username"`
+	Created  string             `json:"created"`
 }
 
 type Message struct {
-	Id   primitive.ObjectID `json:"id" bson:"_id"`
-	Name string             `json:"name"`
+	Id       primitive.ObjectID `json:"id" bson:"_id"`
+	Username string             `json:"name"`
+	Body     string             `json:"body"`
+	Created  string             `json:"created"`
 }

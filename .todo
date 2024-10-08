@@ -5,6 +5,7 @@
 --maybe allow font/font color change
 --light theme
 --<https://github.com/pmndrs/zustand/blob/main/docs/guides/slices-pattern.md>
+--<https://github.com/pmndrs/zustand/blob/main/docs/guides/typescript.md#slices-pattern>
 
 ## backend
 

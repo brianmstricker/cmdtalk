@@ -2,7 +2,7 @@ import ReactTextareaAutosize from "react-textarea-autosize";
 
 const TextInput = ({ setContainerMargin }: { setContainerMargin: React.Dispatch<React.SetStateAction<number>> }) => {
  return (
-  <div className="shrink-0 mt-auto border-t border-white/20 flex absolute w-full bg-gray-900 bottom-0">
+  <div className="shrink-0 mt-auto border-t-2 border-white/20 flex absolute w-full bg-gray-900 bottom-0">
    <div className="relative flex-grow flex before:absolute before:inset-0 before:pointer-events-none before:mr-2 before:bg-custom-gradient before:scale-[101%] before:translate-x-1">
     <ReactTextareaAutosize
      autoFocus
