@@ -4,6 +4,7 @@
 
 --maybe allow font/font color change
 --light theme
+--<https://github.com/pmndrs/zustand/blob/main/docs/guides/slices-pattern.md>
 
 ## backend
 

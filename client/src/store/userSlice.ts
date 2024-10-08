@@ -1,4 +1,5 @@
 import { StateCreator } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface UserSlice {
  user: string;
@@ -6,8 +7,13 @@ export interface UserSlice {
  logout: () => void;
 }
 
-export const userSlice: StateCreator<UserSlice, [], [], UserSlice> = (set) => ({
- user: "",
- setUser: (user) => set(() => ({ user })),
- logout: () => set({ user: "" }),
-});
+export const userSlice: StateCreator<UserSlice, [], [["zustand/persist", UserSlice]]> = persist(
+ (set) => ({
+  user: "",
+  setUser: (user) => set(() => ({ user })),
+  logout: () => set({ user: "" }),
+ }),
+ {
+  name: "user-storage",
+ }
+);
