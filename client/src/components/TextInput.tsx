@@ -6,7 +6,7 @@ const TextInput = ({ setContainerMargin }: { setContainerMargin: React.Dispatch<
    <div className="relative flex-grow flex before:absolute before:inset-0 before:pointer-events-none before:mr-2 before:bg-custom-gradient before:scale-[101%] before:translate-x-1">
     <ReactTextareaAutosize
      autoFocus
-     className="flex-grow py-2 px-4 w-full h-full bg-transparent text-white/80 placeholder-white/60 resize-none custom-scrollbar"
+     className="flex-grow py-2 px-14 w-full h-full bg-transparent text-white/80 placeholder-white/60 resize-none custom-scrollbar"
      placeholder="Type a message"
      minRows={2}
      maxRows={6}
