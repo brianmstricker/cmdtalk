@@ -8,7 +8,7 @@ import (
 
 	"github.com/brianmstricker/cmdtalk/controller"
 	"github.com/brianmstricker/cmdtalk/db"
-	"github.com/gofiber/contrib/websocket"
+	"github.com/brianmstricker/cmdtalk/ws"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -54,14 +54,9 @@ func (a *App) setupHttp() {
 		CacheControl: true,
 		Expiration:   10 * time.Minute,
 	}))
-	app.Use("/ws", func(c *fiber.Ctx) error {
-		if websocket.IsWebSocketUpgrade(c) {
-			c.Locals("allowed", true)
-			return c.Next()
-		}
-		return fiber.ErrUpgradeRequired
-	})
+	ws.Ws(app)
 	app.Get("/api/messages", controller.GetMessages)
+	app.Post("/api/user/create", controller.CreateUser)
 	a.httpServer = app
 }
 

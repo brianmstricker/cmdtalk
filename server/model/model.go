@@ -6,6 +6,7 @@ type User struct {
 	Id       primitive.ObjectID `json:"id" bson:"_id"`
 	Username string             `json:"username"`
 	Created  string             `json:"created"`
+	IsActive bool               `json:"is_active"`
 }
 
 type Message struct {
