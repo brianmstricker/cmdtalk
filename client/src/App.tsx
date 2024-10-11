@@ -3,7 +3,7 @@ import TextInput from "./components/TextInput";
 import UserMessage from "./components/UserMessage";
 import { useQuery } from "@tanstack/react-query";
 import { useBoundStore } from "./store/store";
-import SetUsername from "./components/SetUsername";
+import SetUsername from "./components/SetUsernameModal";
 import NoMessages from "./components/NoMessages";
 
 function App() {
@@ -52,7 +52,8 @@ function App() {
     ))} */}
    </div>
    <div className="w-full bg-transparent h-4 shrink-0" />
-   {user ? <TextInput setContainerMargin={setContainerMargin} /> : <SetUsername />}
+   <TextInput setContainerMargin={setContainerMargin} />
+   {/* <SetUsername /> */}
   </div>
  );
 }
