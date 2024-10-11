@@ -34,19 +34,32 @@ const SetUsernameModal = ({
   setShowArrow(true);
   // fetch username from server
  }, [debouncedUsername]);
+ // todo: improve the focus trap
  useEffect(() => {
   if (!containerRef.current) return;
-  const handleFocus = (event: FocusEvent) => {
-   if (containerRef.current && event.target instanceof Node && !containerRef.current.contains(event.target)) {
-    event.preventDefault();
-    inputRef.current?.focus();
+  const validElements = containerRef.current.querySelectorAll("input,button");
+  const firstElement = validElements[0] as HTMLElement;
+  const lastElement = validElements[validElements.length - 1] as HTMLElement;
+  const handleTab = (e: KeyboardEvent) => {
+   if (e.key === "Tab") {
+    if (e.shiftKey) {
+     if (document.activeElement === firstElement) {
+      e.preventDefault();
+      lastElement.focus();
+     }
+    } else {
+     if (document.activeElement === lastElement) {
+      e.preventDefault();
+      firstElement.focus();
+     }
+    }
    }
   };
-  document.addEventListener("focus", handleFocus, true);
+  document.addEventListener("keydown", handleTab);
   return () => {
-   document.removeEventListener("focus", handleFocus, true);
+   document.removeEventListener("keydown", handleTab);
   };
- }, []);
+ }, [showArrow]);
  useEffect(() => {
   inputRef.current?.focus();
  }, []);
@@ -90,12 +103,14 @@ const SetUsernameModal = ({
       onKeyDown={handleKeyDown}
      />
      <div className={cn("opacity-0 duration-300 transition-all relative", showArrow && "opacity-100")}>
-      <button className={cn("flex flex-col items-center group p-1.5")}>
-       <span className="pointer-events-none whitespace-nowrap border border-white/20 absolute px-2 py-1 bg-gray-900 -top-10 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 right-0 sm:right-auto">
-        Create user
-       </span>
-       <FaArrowRight />
-      </button>
+      {showArrow && (
+       <button className={cn("flex flex-col items-center group p-1.5")}>
+        <span className="pointer-events-none whitespace-nowrap border border-white/20 absolute px-2 py-1 bg-gray-900 -top-10 opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 right-0 sm:right-auto">
+         Create user
+        </span>
+        <FaArrowRight />
+       </button>
+      )}
      </div>
     </div>
    </div>

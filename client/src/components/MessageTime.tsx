@@ -6,6 +6,7 @@ const buttons = [
 ];
 
 const MessageTime = () => {
+ // todo: make a slider for minutes, have other times like 1d, 1w, 1m, 1y
  return (
   <div className="bg-gray-900 ml-auto px-10">
    <div className="flex border-x-2 border-t-2 border-x-white/20 border-t-white/20 divide-x-2 divide-white/20">
