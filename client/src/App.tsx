@@ -23,6 +23,27 @@ function App() {
   if (!scrollContainer.current) return;
   scrollContainer.current.scrollTop = scrollContainer.current.scrollHeight;
  }, []);
+ useEffect(() => {
+  function connectSocket() {
+   const ws = new WebSocket("ws://localhost:8000/ws");
+   ws.onopen = () => {
+    console.log("connected to websocket");
+   };
+   ws.onmessage = (event) => {
+    const message = JSON.parse(event.data);
+    if (message.type === "new_message") {
+     // queryClient.invalidateQueries("messages");
+    }
+   };
+   ws.onclose = () => {
+    console.log("disconnected from websocket");
+    setTimeout(() => {
+     connectSocket();
+    }, 5000);
+   };
+  }
+  connectSocket();
+ }, []);
  return (
   <>
    <div className="relative h-full max-h-[80vh] border-2 min-h-[200px] mx-2 sm:mx-6 my-4 w-full max-w-6xl border-white/20 flex flex-col">

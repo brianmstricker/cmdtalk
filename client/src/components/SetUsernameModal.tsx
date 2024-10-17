@@ -62,6 +62,10 @@ const SetUsernameModal = ({
  }, [showArrow]);
  useEffect(() => {
   inputRef.current?.focus();
+  const time = setTimeout(() => {
+   inputRef.current?.focus();
+  }, 10);
+  return () => clearTimeout(time);
  }, []);
  useEffect(() => {
   const handleEscape = (e: KeyboardEvent) => {

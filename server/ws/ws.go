@@ -8,18 +8,18 @@ import (
 )
 
 func Ws(app *fiber.App) {
-	app.Use("/ws", func(c *fiber.Ctx) error {
-		if websocket.IsWebSocketUpgrade(c) {
-			c.Locals("allowed", true)
-			return c.Next()
-		}
-		return fiber.ErrUpgradeRequired
-	})
-	app.Get("/ws/:id", websocket.New(func(c *websocket.Conn) {
-		log.Println(c.Locals("allowed"))
-		log.Println(c.Params("id"))
-		log.Println(c.Query("v"))
-		log.Println(c.Cookies("session"))
+	// app.Use("/ws", func(c *fiber.Ctx) error {
+	// 	if websocket.IsWebSocketUpgrade(c) {
+	// 		c.Locals("allowed", true)
+	// 		return c.Next()
+	// 	}
+	// 	return fiber.ErrUpgradeRequired
+	// })
+	app.Get("/ws", websocket.New(func(c *websocket.Conn) {
+		// log.Println(c.Locals("allowed"))
+		// log.Println(c.Params("id"))
+		// log.Println(c.Query("v"))
+		// log.Println(c.Cookies("session"))
 		var (
 			mt  int
 			msg []byte

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
 	"strings"
@@ -18,12 +19,14 @@ import (
 
 type App struct {
 	httpServer *fiber.App
+	client     *mongo.Client
 	database   *mongo.Database
 }
 
 func main() {
 	app := App{}
 	app.init()
+	defer app.shutdown()
 }
 
 func (a *App) init() {
@@ -31,8 +34,8 @@ func (a *App) init() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	a.setupHttp()
 	a.setupDB()
+	a.setupHttp()
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
@@ -55,32 +58,28 @@ func (a *App) setupHttp() {
 		Expiration:   10 * time.Minute,
 	}))
 	ws.Ws(app)
-	app.Get("/api/messages", controller.GetMessages)
+	messageController := controller.NewMessageController(a.database.Collection("messages"), a.client)
+	app.Get("/api/messages", messageController.GetMessages)
 	app.Post("/api/user/create", controller.CreateUser)
 	a.httpServer = app
 }
 
 func (a *App) setupDB() {
-	client, err := db.ConnectDB()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	var err error
+	a.client, err = db.ConnectDB(ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
-	a.database = client.Database("cmdtalk")
-	// client, err := db.ConnectDB()
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// client.Disconnect(context.Background())
+	a.database = a.client.Database("cmdtalk")
+	if a.database == nil {
+		log.Fatal("Could not get database")
+	}
+}
 
-	// mongoClient, err := db.ConnectDB()
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	// defer cancel()
-	// defer func() {
-	// 	if err = mongoClient.Disconnect(ctx); err != nil {
-	// 		panic(err)
-	// 	}
-	// }()
+func (a *App) shutdown() {
+	if err := a.client.Disconnect(context.Background()); err != nil {
+		log.Fatal(err)
+	}
 }
