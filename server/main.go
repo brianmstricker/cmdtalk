@@ -58,9 +58,11 @@ func (a *App) setupHttp() {
 		Expiration:   10 * time.Minute,
 	}))
 	ws.Ws(app)
+	userController := controller.NewUserController(a.database.Collection("users"), a.client)
 	messageController := controller.NewMessageController(a.database.Collection("messages"), a.client)
 	app.Get("/api/messages", messageController.GetMessages)
-	app.Post("/api/user/create", controller.CreateUser)
+	app.Get("/api/users", userController.GetUsers)
+	app.Post("/api/user/create", userController.CreateUser)
 	a.httpServer = app
 }
 

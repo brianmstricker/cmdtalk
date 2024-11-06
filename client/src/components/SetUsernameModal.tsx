@@ -19,9 +19,7 @@ const SetUsernameModal = ({
  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
   if (e.key === "Enter" && !e.shiftKey) {
    e.preventDefault();
-   // if (!user) setShowCreateUsername(true);
-   // if (!message.trim()) return;
-   // console.log(message.trim());
+   if (!showArrow) return;
   }
  }
  // todo: lodash.debounce to search for username
@@ -31,10 +29,9 @@ const SetUsernameModal = ({
    return;
   }
   console.log(debouncedUsername);
+  //todo: fetch usernames from server
   setShowArrow(true);
-  // fetch username from server
  }, [debouncedUsername]);
- // todo: improve the focus trap
  useEffect(() => {
   if (!containerRef.current) return;
   const validElements = containerRef.current.querySelectorAll("input,button");

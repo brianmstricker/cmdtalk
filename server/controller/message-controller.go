@@ -9,16 +9,16 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
-type Message struct {
+type MessageCon struct {
 	collection *mongo.Collection
 	client     *mongo.Client
 }
 
-func NewMessageController(collection *mongo.Collection, client *mongo.Client) *Message {
-	return &Message{collection: collection, client: client}
+func NewMessageController(collection *mongo.Collection, client *mongo.Client) *MessageCon {
+	return &MessageCon{collection: collection, client: client}
 }
 
-func (m *Message) GetMessages(c *fiber.Ctx) error {
+func (m *MessageCon) GetMessages(c *fiber.Ctx) error {
 	cursor, err := m.collection.Find(context.Background(), bson.M{})
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
